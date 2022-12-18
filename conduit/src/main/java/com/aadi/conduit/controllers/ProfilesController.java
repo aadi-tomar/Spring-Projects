@@ -1,5 +1,6 @@
 package com.aadi.conduit.controllers;
 
+import com.aadi.conduit.DTO.UserSignupDto;
 import com.aadi.conduit.entities.ErrorEntity;
 import com.aadi.conduit.entities.UserEntity;
 import com.aadi.conduit.services.UserService;
@@ -8,19 +9,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProfilesController {
 
     @Autowired
-    private UserService userService;
+    private  UserService userService;
 
     @GetMapping("/profiles/{username}")
-    UserEntity getProfileByUserName(String username ){
-        return userService.findUserByUserName(username);
+    ResponseEntity<UserEntity> getProfileByUserName(@PathVariable("username") String username ){
+        return new ResponseEntity<>(userService.findUserByUserName(username), HttpStatus.OK);
+
+    }
+
+    @PostMapping("/users")
+    ResponseEntity<UserEntity>  registerUser(@RequestBody UserSignupDto userSignupDto){
+
+        UserEntity newUser = userService.registerNewUser(userSignupDto.getUser().getUsername(),
+                userSignupDto.getUser().getPassword(), userSignupDto.getUser().getEmail());
+
+        return new ResponseEntity< >( newUser, HttpStatus.CREATED ) ;
 
     }
 
