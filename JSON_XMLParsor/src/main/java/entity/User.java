@@ -2,10 +2,13 @@ package entity;
 
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
+@XmlRootElement(name = "user")
 public class User {
 
     private int id;
