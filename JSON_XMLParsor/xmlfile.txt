@@ -1,0 +1,11 @@
+<user>
+  <id>1</id>
+  <firstName>Ram</firstName>
+  <lastName>Tomar</lastName>
+  <address>
+    <houseNo>F-8754</houseNo>
+    <streetNo> gali no. 25665</streetNo>
+    <city>gzb</city>
+    <pinCode>67878</pinCode>
+  </address>
+</user>
