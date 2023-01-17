@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "firstName": "Ram",
+  "lastName": "Tomar",
+  "address": {
+    "houseNo": "F-54",
+    "streetNo": " gali no. 2",
+    "city": "gzb",
+    "pinCode": 2010343
+  }
+}
