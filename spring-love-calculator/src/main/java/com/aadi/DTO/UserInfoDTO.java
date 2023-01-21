@@ -1,13 +1,14 @@
 package com.aadi.DTO;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 
 public class UserInfoDTO {
 
-    @NotBlank(message = "UserName cant be blank")
+    @NotBlank(message = "* UserName cant be blank")
+    @Size(min = 3, max = 15, message = "* Your name should have char between 3 and 15")
     private String userName;
+    @NotBlank(message = "* Crush name cant be blank")
+    @Size(min = 3, max = 15, message = "* Your name should have char between 3 and 15")
     private String crushName;
     @AssertTrue(message = "You have to agree to proceed further")
     private boolean termsAndConditions;

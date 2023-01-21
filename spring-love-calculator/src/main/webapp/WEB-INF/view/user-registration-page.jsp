@@ -36,12 +36,30 @@
 </br>
 
 <label> Gender : </label>
-Female <form:radiobutton path = "gender" value = "famale"/>
+Female <form:radiobutton path = "gender" value = "female"/>
 Male<form:radiobutton path = "gender" value = "male"/>
 </br>
-<input type = "submit" value = "register">
+<label>Age : </label>
+<form:input path = "age"/>
+</br>
 
 </div>
+
+<div align = "center">
+<h3> Communication : </h3>
+
+<label> Email </label>
+<form:input path = "communicationDTO.email"/>
+<label> Phone </label>
+<form:input path = "communicationDTO.phone"/>
+</br>
+</br>
+<input type = "submit" value = "register"/>
+
+</div>
+
+
+
 </form:form>
 </body>
 </html>

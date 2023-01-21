@@ -9,7 +9,7 @@
     UserName is : ${userInfo.userName}
 </p>
 <p>
-    crushName is : ${userInfo.crushName}
+    crushName is : ${userInfo.crushName} and Love is 100%
 </p>
 </div>
 </body>

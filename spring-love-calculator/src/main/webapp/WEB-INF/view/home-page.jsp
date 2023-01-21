@@ -27,7 +27,7 @@ function validateUserName(){
 
 <body>
 <h1 align = "center"> Love Calculator </h1><hr>
-<form:form action = "process-homepage" method = "GET" modelAttribute = "userInfo" onsubmit = "return validateUserName()">
+<form:form action = "process-homepage" method = "GET" modelAttribute = "userInfo" >
 <div align = "center">
 <p>
 <label for= "yn" > Your name : </label>
@@ -38,6 +38,7 @@ function validateUserName(){
 <p>
 <label for= "cn" > Crush name : </label>
 <form:input id = "cn" path = "crushName"/>
+<form:errors path = "crushName" cssClass = "error" />
 </p>
 
 <p>

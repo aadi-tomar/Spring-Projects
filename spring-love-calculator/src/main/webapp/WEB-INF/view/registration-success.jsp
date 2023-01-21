@@ -17,5 +17,10 @@ ${temp}
 </c:forEach>
  <br/>
 Gender :  ${userRegistration.gender} <br/>
+Email : ${userRegistration.communicationDTO.email} <br/>
+Phone : ${userRegistration.communicationDTO.phone}
+<br/>
+Age : ${userRegistration.age}
+<br/>
 </body>
 </html>
