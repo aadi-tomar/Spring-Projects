@@ -28,7 +28,7 @@ public class LoveCalculatorApplicationInitializer extends AbstractAnnotationConf
     @Override
     protected String[] getServletMappings() {
 
-        String[] arr = {"/home/*"};
+        String[] arr = {"/"};
         return  arr;
     }
 
