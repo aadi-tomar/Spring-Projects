@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-@ComponentScan(basePackages = "com.aadi")
+@ComponentScan(basePackages= "com.aadi")
 public class LoveCalculatorAppConfig {
 
 

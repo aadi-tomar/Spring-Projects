@@ -4,9 +4,12 @@ import com.aadi.DTO.UserInfoDTO;
 import com.aadi.DTO.UserRegistrationDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
 
 @Controller
 public class LCAppController {
@@ -24,8 +27,14 @@ public class LCAppController {
     }
 
     @RequestMapping("/process-homepage")
-    public String showResultPage( @ModelAttribute("userInfo") UserInfoDTO userInfoDTO){
+    public String showResultPage(@Valid @ModelAttribute("userInfo") UserInfoDTO userInfoDTO, BindingResult result){
 
+        System.out.println(userInfoDTO.isTermsAndConditions());
+        if(result.hasErrors()){
+            System.out.println("Errors are present");
+            return "home-page";
+        }
+        System.out.println("No errors are present");
         //model.addAttribute("userInfo", userInfoDTO);
         //model.addAttribute("userName", userInfoDTO.getUserName());
         //model.addAttribute("crushName", userInfoDTO.getCrushName());
