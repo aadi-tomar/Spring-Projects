@@ -16,18 +16,24 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@SessionAttributes("userInfo")
 public class LCAppController {
 
     @RequestMapping("/")
-    public String showHomePage(@ModelAttribute("userInfo") UserInfoDTO userInfoDTO, HttpServletRequest request){
+    public String showHomePage(Model model){
+
+        model.addAttribute("userInfo", new UserInfoDTO());
+        return "home-page";
+        //Cookie implementation
         /*
         UserInfoDTO userInfo = new UserInfoDTO();
         model.addAttribute("userInfo", userInfo);
-         */
+
 
         Cookie[] cookies = request.getCookies();
         for(Cookie cookie : cookies){
@@ -36,17 +42,24 @@ public class LCAppController {
                 userInfoDTO.setUserName(userName);
             }
         }
-        return "home-page";
+        */
+
+
     }
 
     @RequestMapping("/sendEmail")
-    public String sendEmail(@CookieValue("lcApp.userName") String userName, Model model ){
-
-        //manually adding modelAttribute
-        model.addAttribute("userName", userName);
+    public String sendEmail( Model model ){
         model.addAttribute("emailDTO" , new EmailDTO());
-        //model.addAttribute("userName", userName.toUpperCase());
         return "send-email-page";
+
+
+
+        //get cookie value using annotation
+        //@CookieValue("lcApp.userName") String userName,
+        //manually adding modelAttribute
+        //model.addAttribute("userName", userName);
+
+        //model.addAttribute("userName", userName.toUpperCase());
     }
 
     @RequestMapping("/processEmail")
@@ -58,7 +71,7 @@ public class LCAppController {
 
     @RequestMapping("/process-homepage")
     public String showResultPage(@Valid @ModelAttribute("userInfo") UserInfoDTO userInfoDTO,
-                                 BindingResult result, HttpServletResponse response){
+                                 BindingResult result, HttpServletRequest request){
 
         //System.out.println(userInfoDTO.isTermsAndConditions());
         if(result.hasErrors()){
@@ -69,11 +82,15 @@ public class LCAppController {
             return "home-page";
         }
 
-        //Cookie to store the user info and pass to next page
+        HttpSession httpSession = request.getSession();
+        httpSession.setAttribute("userName", userInfoDTO.getUserName());
 
+        return "result-page";
+        //Cookie to store the user info and pass to next page
+        /*
         Cookie cookie = new Cookie("lcApp.userName", userInfoDTO.getUserName());
         cookie.setMaxAge(60*60*24);
-        response.addCookie(cookie);
+        response.addCookie(cookie);*/
         // write a service logic to return the result between user and crush
 
 
@@ -81,7 +98,7 @@ public class LCAppController {
         //model.addAttribute("userInfo", userInfoDTO);
         //model.addAttribute("userName", userInfoDTO.getUserName());
         //model.addAttribute("crushName", userInfoDTO.getCrushName());
-        return "result-page";
+
 
     }
 
