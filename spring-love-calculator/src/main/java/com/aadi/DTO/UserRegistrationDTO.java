@@ -1,5 +1,7 @@
 package com.aadi.DTO;
 
+import com.aadi.Validator.Age;
+
 public class UserRegistrationDTO {
 
     private String name;
@@ -8,6 +10,7 @@ public class UserRegistrationDTO {
     private String countryName;
     private String[] hobbies;
     private String gender;
+    @Age(lower = 24, upper = 70)
     private Integer age;
     private CommunicationDTO communicationDTO;
 

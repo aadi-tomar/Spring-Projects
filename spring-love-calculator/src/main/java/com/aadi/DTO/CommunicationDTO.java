@@ -4,8 +4,6 @@ public class CommunicationDTO {
 
     private String email ;
     private Phone phone;
-
-
     public Phone getPhone() {
         return phone;
     }

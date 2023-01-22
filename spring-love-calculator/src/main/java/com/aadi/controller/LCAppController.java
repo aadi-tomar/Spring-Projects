@@ -50,7 +50,12 @@ public class LCAppController {
     }
 
     @RequestMapping("/registration-success")
-    public String processUserReg(@ModelAttribute("userRegistration") UserRegistrationDTO userRegistrationDTO){
+    public String processUserReg(@Valid @ModelAttribute("userRegistration") UserRegistrationDTO userRegistrationDTO,
+                                 BindingResult result){
+        if(result.hasErrors()){
+            System.out.println("My page has errors");
+            return "user-registration-page";
+        }
         return "registration-success";
     }
 }
