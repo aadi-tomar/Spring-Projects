@@ -1,5 +1,6 @@
 package com.aadi.controller;
 
+import com.aadi.DTO.EmailDTO;
 import com.aadi.DTO.UserInfoDTO;
 import com.aadi.DTO.UserRegistrationDTO;
 import com.aadi.Validator.EmailValidator;
@@ -8,13 +9,12 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class LCAppController {
@@ -31,15 +31,39 @@ public class LCAppController {
         return "home-page";
     }
 
+    @RequestMapping("/sendEmail/{userName}")
+    public String sendEmail(@PathVariable("userName") String userName,
+                             Model model){
+
+        //manually adding modelAttribut
+        model.addAttribute("emailDTO" , new EmailDTO());
+
+        model.addAttribute("userName", userName.toUpperCase());
+        return "send-email-page";
+    }
+
+    @RequestMapping("/processEmail")
+    public String processEmail(@ModelAttribute("emailDTO") EmailDTO emailDTO){
+
+        return "process-email-page";
+
+    }
+
     @RequestMapping("/process-homepage")
     public String showResultPage(@Valid @ModelAttribute("userInfo") UserInfoDTO userInfoDTO, BindingResult result){
 
         System.out.println(userInfoDTO.isTermsAndConditions());
         if(result.hasErrors()){
             System.out.println("Errors are present");
+            List<ObjectError> err = result.getAllErrors();
+            for(ObjectError oe : err)
+                System.out.println(oe);
             return "home-page";
         }
-        System.out.println("No errors are present");
+        // write a service logic to return the result between user and crush
+
+
+        //System.out.println("No errors are present");
         //model.addAttribute("userInfo", userInfoDTO);
         //model.addAttribute("userName", userInfoDTO.getUserName());
         //model.addAttribute("crushName", userInfoDTO.getCrushName());
@@ -67,7 +91,7 @@ public class LCAppController {
         return "registration-success";
     }
 
-    @InitBinder
+    @InitBinder("userRegistration")
     public void initBinder(WebDataBinder binder){
         //disallowed a particular field
         //binder.setDisallowedFields("name");
