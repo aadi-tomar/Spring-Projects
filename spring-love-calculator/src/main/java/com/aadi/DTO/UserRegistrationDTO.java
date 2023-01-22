@@ -2,8 +2,11 @@ package com.aadi.DTO;
 
 import com.aadi.Validator.Age;
 
+import javax.validation.constraints.NotEmpty;
+
 public class UserRegistrationDTO {
 
+    @NotEmpty(message = "* cant be null")
     private String name;
     private String userName;
     private char[] password;

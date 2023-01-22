@@ -2,9 +2,13 @@ package com.aadi.controller;
 
 import com.aadi.DTO.UserInfoDTO;
 import com.aadi.DTO.UserRegistrationDTO;
+import com.aadi.Validator.UserNameValidator;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,5 +61,17 @@ public class LCAppController {
             return "user-registration-page";
         }
         return "registration-success";
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        //disallowed a particular field
+        //binder.setDisallowedFields("name");
+        StringTrimmerEditor editor = new StringTrimmerEditor(true);
+        binder.registerCustomEditor(String.class, "name", editor);
+
+        UserNameValidator userNameValidator = new UserNameValidator();
+        binder.addValidators(userNameValidator);
+
     }
 }

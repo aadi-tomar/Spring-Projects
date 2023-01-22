@@ -18,9 +18,11 @@
 <div align = "center">
 <label> User : </label>
 <form:input path = "name"/>
+<form:errors path = "name" cssClass = "error"/>
 <br/>
 <label> User Name : </label>
 <form:input path = "userName"/>
+<form:errors path = "userName" cssClass = "error"/>
 </br>
 <label > Password : </label>
 <form:password path = "password"/>
