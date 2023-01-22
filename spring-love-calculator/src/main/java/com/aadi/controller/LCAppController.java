@@ -2,6 +2,7 @@ package com.aadi.controller;
 
 import com.aadi.DTO.UserInfoDTO;
 import com.aadi.DTO.UserRegistrationDTO;
+import com.aadi.Validator.EmailValidator;
 import com.aadi.Validator.UserNameValidator;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -72,6 +73,8 @@ public class LCAppController {
 
         UserNameValidator userNameValidator = new UserNameValidator();
         binder.addValidators(userNameValidator);
+        EmailValidator emailValidator = new EmailValidator();
+        binder.addValidators(emailValidator);
 
     }
 }
