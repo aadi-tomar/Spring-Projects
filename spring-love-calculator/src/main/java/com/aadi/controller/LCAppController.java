@@ -5,6 +5,8 @@ import com.aadi.DTO.UserInfoDTO;
 import com.aadi.DTO.UserRegistrationDTO;
 import com.aadi.Validator.EmailValidator;
 import com.aadi.Validator.UserNameValidator;
+import com.aadi.service.ILCAppEmailServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,9 @@ import java.util.List;
 @Controller
 @SessionAttributes("userInfo")
 public class LCAppController {
+
+    @Autowired
+    private ILCAppEmailServiceImpl ilcAppEmailService;
 
     @RequestMapping("/")
     public String showHomePage(Model model){
@@ -63,7 +68,10 @@ public class LCAppController {
     }
 
     @RequestMapping("/processEmail")
-    public String processEmail(@ModelAttribute("emailDTO") EmailDTO emailDTO){
+    public String processEmail(@SessionAttribute("userInfo") UserInfoDTO userInfoDTO,
+                               @ModelAttribute("emailDTO") EmailDTO emailDTO){
+
+        ilcAppEmailService.sendEmail(userInfoDTO.getUserName(), emailDTO.getUserEmail(), "Married" );
 
         return "process-email-page";
 

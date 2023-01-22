@@ -8,11 +8,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import java.util.Properties;
 
 @EnableWebMvc
 @Configuration
@@ -51,5 +55,23 @@ public class LoveCalculatorAppConfig implements WebMvcConfigurer {
     public Validator getValidator() {
 
         return validator();
+    }
+
+    @Bean
+    public JavaMailSender getJavaMailSender(){
+        JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
+        javaMailSenderImpl.setHost("smtp.gmail.com");
+        javaMailSenderImpl.setUsername("abc@gmail.com");
+        javaMailSenderImpl.setPassword("");
+        javaMailSenderImpl.setPort(25); // 587
+        Properties mailProperties = new Properties();
+        mailProperties.put("mail.transport.protocol", "smtp");
+        mailProperties.put("mail.smtp.auth", "true");
+        mailProperties.put("mail.smtp.starttls.enable", "true");
+        mailProperties.put("mail.debug", "true");
+        //mailProperties.put("mail.smtp.starttls.enable", true);
+        //mailProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        javaMailSenderImpl.setJavaMailProperties(mailProperties);
+        return javaMailSenderImpl;
     }
 }
