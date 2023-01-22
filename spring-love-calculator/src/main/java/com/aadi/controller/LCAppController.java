@@ -57,6 +57,9 @@ public class LCAppController {
     @RequestMapping("/registration-success")
     public String processUserReg(@Valid @ModelAttribute("userRegistration") UserRegistrationDTO userRegistrationDTO,
                                  BindingResult result){
+
+        EmailValidator emailValidator = new EmailValidator();
+        emailValidator.validate(userRegistrationDTO, result);
         if(result.hasErrors()){
             System.out.println("My page has errors");
             return "user-registration-page";
@@ -73,8 +76,8 @@ public class LCAppController {
 
         UserNameValidator userNameValidator = new UserNameValidator();
         binder.addValidators(userNameValidator);
-        EmailValidator emailValidator = new EmailValidator();
-        binder.addValidators(emailValidator);
+        /*EmailValidator emailValidator = new EmailValidator();
+        binder.addValidators(emailValidator);*/
 
     }
 }
