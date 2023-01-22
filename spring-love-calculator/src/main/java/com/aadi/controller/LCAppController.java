@@ -13,6 +13,9 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -20,22 +23,27 @@ import java.util.List;
 public class LCAppController {
 
     @RequestMapping("/")
-    public String showHomePage(@ModelAttribute("userInfo") UserInfoDTO userInfoDTO){
+    public String showHomePage(@ModelAttribute("userInfo") UserInfoDTO userInfoDTO, HttpServletRequest request){
         /*
         UserInfoDTO userInfo = new UserInfoDTO();
         model.addAttribute("userInfo", userInfo);
-
          */
 
-
+        Cookie[] cookies = request.getCookies();
+        for(Cookie cookie : cookies){
+            if(cookie.getName().equals("lcApp.userName")){
+                String userName = cookie.getValue();
+                userInfoDTO.setUserName(userName);
+            }
+        }
         return "home-page";
     }
 
     @RequestMapping("/sendEmail")
-    public String sendEmail(//@ModelAttribute("emailDTO") EmailDTO emailDTO,
-                             Model model){
+    public String sendEmail(@CookieValue("lcApp.userName") String userName, Model model ){
 
-        //manually adding modelAttribut
+        //manually adding modelAttribute
+        model.addAttribute("userName", userName);
         model.addAttribute("emailDTO" , new EmailDTO());
         //model.addAttribute("userName", userName.toUpperCase());
         return "send-email-page";
@@ -49,9 +57,10 @@ public class LCAppController {
     }
 
     @RequestMapping("/process-homepage")
-    public String showResultPage(@Valid @ModelAttribute("userInfo") UserInfoDTO userInfoDTO, BindingResult result){
+    public String showResultPage(@Valid @ModelAttribute("userInfo") UserInfoDTO userInfoDTO,
+                                 BindingResult result, HttpServletResponse response){
 
-        System.out.println(userInfoDTO.isTermsAndConditions());
+        //System.out.println(userInfoDTO.isTermsAndConditions());
         if(result.hasErrors()){
             System.out.println("Errors are present");
             List<ObjectError> err = result.getAllErrors();
@@ -59,6 +68,12 @@ public class LCAppController {
                 System.out.println(oe);
             return "home-page";
         }
+
+        //Cookie to store the user info and pass to next page
+
+        Cookie cookie = new Cookie("lcApp.userName", userInfoDTO.getUserName());
+        cookie.setMaxAge(60*60*24);
+        response.addCookie(cookie);
         // write a service logic to return the result between user and crush
 
 

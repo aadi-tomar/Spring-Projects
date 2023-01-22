@@ -5,7 +5,7 @@
 </head>
 
 <body>
-<h1> HI </h1>
+<h1> HI ${userName}</h1>
 <h2> Send result to your Email </h2>
 
 <form:form action = "processEmail" method = "GET" modelAttribute = "emailDTO" >
