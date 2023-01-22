@@ -10,7 +10,7 @@
  </br>
    Married
  </br>
- <a href = "/lc/sendEmail/${userInfo.userName}"> Send result to your email<a/>
+ <a href = "/lc/sendEmail"> Send result to your email<a/>
 
 </div>
 </body>

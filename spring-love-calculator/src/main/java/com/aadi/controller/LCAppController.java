@@ -31,14 +31,13 @@ public class LCAppController {
         return "home-page";
     }
 
-    @RequestMapping("/sendEmail/{userName}")
-    public String sendEmail(@PathVariable("userName") String userName,
+    @RequestMapping("/sendEmail")
+    public String sendEmail(//@ModelAttribute("emailDTO") EmailDTO emailDTO,
                              Model model){
 
         //manually adding modelAttribut
         model.addAttribute("emailDTO" , new EmailDTO());
-
-        model.addAttribute("userName", userName.toUpperCase());
+        //model.addAttribute("userName", userName.toUpperCase());
         return "send-email-page";
     }
 
